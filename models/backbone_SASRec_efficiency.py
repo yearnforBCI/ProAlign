@@ -89,7 +89,7 @@ class Item_Embedding(nn.Module):
             )
 
             self.init_ID_embedding(self.nullity, key_words["ID_embs_init_type"])
-            print("language_embeddingsand ID_embeddings finished!")
+            print("language_embeddings and ID_embeddings finished!")
 
     def load_language_embeddings(self, directory, language_model_type, scale):
         language_embs = pd.read_pickle(os.path.join(directory,
@@ -333,7 +333,7 @@ class ProAlign(SASRec_backbone):
 
         self.no_prototype = key_words.get('no_prototype', False)
         if self.no_prototype:
-            print("[ProAlign] ⚠️ ABLATION MODE: Prototype mechanism DISABLED (w/o Prototype)")
+            print("[ProAlign] ABLATION MODE: Prototype mechanism DISABLED (w/o Prototype)")
         self.alpha = key_words.get('alpha', 0.1)
         self.beta_proto = key_words.get('beta_proto', 0.01)
         self.llm_dim = key_words.get('llm_dim', 3072)
@@ -479,7 +479,7 @@ class ProAlign(SASRec_backbone):
 
             if new_weight.shape[0] == self.item_embeddings.weight.shape[0]:
                 self.item_embeddings.weight.data.copy_(new_weight)
-                print('ID Embedding not LLM Embedding', self.item_embeddings.weight.requires_grad)
+                print('ID Embedding, not LLM Embedding', self.item_embeddings.weight.requires_grad)
                 print(f"   ID Embeddings initialized! Shape: {new_weight.shape}")
             else:
                 print(f"   Shape mismatch: {new_weight.shape} vs {self.item_embeddings.weight.shape}")
@@ -513,10 +513,10 @@ class ProAlign(SASRec_backbone):
         freeze_proto = self.key_words.get('freeze_prototypes', True)
         if freeze_proto:
             self.prototypes.requires_grad = False
-            print(f"  ✅ Prototypes initialized and FROZEN. Shape: {self.prototypes.shape}")
+            print(f"  Prototypes initialized and FROZEN. Shape: {self.prototypes.shape}")
         else:
             self.prototypes.requires_grad = True
-            print(f"  ✅ Prototypes initialized and TRAINABLE. Shape: {self.prototypes.shape}")
+            print(f"  Prototypes initialized and TRAINABLE. Shape: {self.prototypes.shape}")
 
         self.item_intent_emb = None
         self.prototype_initialized = True

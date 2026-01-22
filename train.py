@@ -178,7 +178,7 @@ def parse_args():
     
     parser.add_argument('--efficient_inference', action='store_true')
     parser.add_argument('--num_prototypes', type=int, default=64)
-    parser.add_argument('--proto_temperature', type=float, default=0.1)
+    parser.add_argument('--proto_temperature', type=float, default=0.04)
     parser.add_argument('--alpha', type=float, default=0.1)
     parser.add_argument('--beta_proto', type=float, default=0.01)
     parser.add_argument('--llm_dim', type=int, default=3072)
@@ -186,18 +186,18 @@ def parse_args():
     parser.add_argument('--semantic_weight', type=float, default=0.5)
     parser.add_argument('--semantic_init', type=str2bool, default=True)
     parser.add_argument('--align_mode', type=str, default='infonce')
-    parser.add_argument('--cl_temperature', type=float, default=1.0)
+    parser.add_argument('--cl_temperature', type=float, default=0.04)
     parser.add_argument('--num_heads_proto', type=int, default=1)
-    parser.add_argument('--use_slsi', type=str2bool, default=False)
-    parser.add_argument('--slsi_weight', type=float, default=0.3)
+    parser.add_argument('--use_slsi', type=str2bool, default=True)
+    parser.add_argument('--slsi_weight', type=float, default=1.0)
     parser.add_argument('--slsi_context_aware', type=str2bool, default=False)
     parser.add_argument('--freeze_prototypes', type=str2bool, default=True)
-    parser.add_argument('--hard_neg_top_k', type=int, default=10)
+    parser.add_argument('--hard_neg_top_k', type=int, default=20)
     parser.add_argument('--warmup_epochs', type=int, default=5)
     parser.add_argument('--use_attn_fusion', type=str2bool, default=True)
-    parser.add_argument('--use_ppd', type=str2bool, default=False)
-    parser.add_argument('--ppd_warmup_ratio', type=float, default=0.3)
-    parser.add_argument('--ppd_transition_ratio', type=float, default=0.7)
+    parser.add_argument('--use_ppd', type=str2bool, default=True)
+    parser.add_argument('--ppd_warmup_ratio', type=float, default=0.0)
+    parser.add_argument('--ppd_transition_ratio', type=float, default=0.05)
     parser.add_argument('--ppd_ema_decay', type=float, default=0.99)
     parser.add_argument('--freeze_embedding_epochs', type=int, default=0)
     parser.add_argument('--use_user_intent', type=str2bool, default=True)
@@ -367,7 +367,7 @@ if __name__ == '__main__':
             if hasattr(model, 'current_epoch'):
                 model.current_epoch = epoch
                 if epoch == getattr(args, 'warmup_epochs', 5):
-                    logger.info(f"[Curriculum] Epoch {epoch}: Hard negatives ACTIVATED! 🚀")
+                    logger.info(f"[Curriculum] Epoch {epoch}: Hard negatives ACTIVATED!")
         
         if args.freeze_embedding_epochs > 0 and args.model_type in ["ProAlign", "ProAlign_GRU", "ProAlign_BERT4Rec"]:
             if epoch < args.freeze_embedding_epochs:

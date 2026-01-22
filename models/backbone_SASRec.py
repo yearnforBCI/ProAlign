@@ -517,7 +517,7 @@ class ProAlign(SASRec_backbone):
 
             if new_weight.shape[0] == self.item_embeddings.weight.shape[0]:
                 self.item_embeddings.weight.data.copy_(new_weight)
-                print('ID Embedding，not LLM Embedding', self.item_embeddings.weight.requires_grad)
+                print('ID Embedding, not LLM Embedding', self.item_embeddings.weight.requires_grad)
                 print(f"   ID Embeddings initialized! Shape: {new_weight.shape}")
             else:
                 print(f"   Shape mismatch: {new_weight.shape} vs {self.item_embeddings.weight.shape}")
@@ -551,10 +551,10 @@ class ProAlign(SASRec_backbone):
         freeze_proto = self.key_words.get('freeze_prototypes', True)
         if freeze_proto:
             self.prototypes.requires_grad = False
-            print(f"  ✅ Prototypes initialized and FROZEN. Shape: {self.prototypes.shape}")
+            print(f"  Prototypes initialized and FROZEN. Shape: {self.prototypes.shape}")
         else:
             self.prototypes.requires_grad = True
-            print(f"  ✅ Prototypes initialized and TRAINABLE. Shape: {self.prototypes.shape}")
+            print(f"  Prototypes initialized and TRAINABLE. Shape: {self.prototypes.shape}")
 
         self.item_intent_emb = None
         self.prototype_initialized = True
