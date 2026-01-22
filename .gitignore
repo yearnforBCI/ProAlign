@@ -1,0 +1,8 @@
+﻿__pycache__/
+*.pyc
+.idea/
+*.pkl
+*.pickle
+data/
+saved/
+output/
